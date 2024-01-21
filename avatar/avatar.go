@@ -52,7 +52,7 @@ func generateSquare(text string, o Options, w io.Writer) {
 	fontSize := o.Size / 2
 	strokeWidth := o.Size / 10
 
-	borderColor, backgroundColor, fontColor := GenerateComplementaryColors(o.BorderColor, o.BackgroundColor, o.FontColor)
+	borderColor, backgroundColor, fontColor := GenerateColors(o.BorderColor, o.BackgroundColor, o.FontColor)
 
 	if len(text) > 2 {
 		text = text[:2]
@@ -82,7 +82,7 @@ func generateCircle(text string, o Options, w io.Writer) {
 	fontSize := o.Size / 2
 	strokeWidth := o.Size / 10
 
-	borderColor, backgroundColor, fontColor := GenerateComplementaryColors(o.BorderColor, o.BackgroundColor, o.FontColor)
+	borderColor, backgroundColor, fontColor := GenerateColors(o.BorderColor, o.BackgroundColor, o.FontColor)
 
 	if len(text) > 2 {
 		text = text[:2]

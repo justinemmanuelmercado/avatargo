@@ -15,24 +15,20 @@ func NewColorOption(color string) ColorOption {
 	return ColorOption{Color: color, Set: true}
 }
 
-// hexToRGB converts a hex color string to RGB.
 func hexToRGB(hex string) (int, int, int) {
 	var r, g, b int
 	_, err := fmt.Sscanf(hex, "#%02x%02x%02x", &r, &g, &b)
 	if err != nil {
-		// Handle errors or set default values
 		r, g, b = 0, 0, 0
 	}
 	return r, g, b
 }
 
-// adjustColor creates a variation of the given color.
 func adjustColor(r, g, b int, factor float64) (int, int, int) {
 	newR := int(float64(r) * factor)
 	newG := int(float64(g) * factor)
 	newB := int(float64(b) * factor)
 
-	// Ensure RGB values are within valid range
 	newR = min(max(newR, 0), 255)
 	newG = min(max(newG, 0), 255)
 	newB = min(max(newB, 0), 255)
@@ -50,18 +46,13 @@ func complement(r, g, b int) (int, int, int) {
 	return 255 - r, 255 - g, 255 - b
 }
 
-// GenerateComplementaryColors generates colors based on the provided or default colors.
-func GenerateComplementaryColors(border, background, font ColorOption) (borderColor, backgroundColor, fontColor string) {
-	// List of good-looking colors
+func GenerateColors(border, background, font ColorOption) (borderColor, backgroundColor, fontColor string) {
 	goodColors := []string{"#0066cc", "#ffcc00", "#ff0099", "#33cc33", "#9933ff", "#ff6666"}
 
-	// Seed the random number generator
 	rng := rand.New(rand.NewSource(time.Now().UnixNano()))
 
-	// Select a random color from the list as the default
 	defaultColor := goodColors[rng.Intn(len(goodColors))]
 
-	// Determine base color for calculations
 	var baseColor string
 	if border.Set {
 		baseColor = border.Color
@@ -82,10 +73,9 @@ func GenerateComplementaryColors(border, background, font ColorOption) (borderCo
 		backgroundColor = rgbToHex(br, bg, bb)
 	}
 
-	// Set colors based on inputs
 	borderColor = border.Color
 	if !border.Set {
-		borderColorR, borderColorG, borderColorB := adjustColor(br, bg, bb, 0.75) // Darken by 15%
+		borderColorR, borderColorG, borderColorB := adjustColor(br, bg, bb, 0.75)
 		borderColor = rgbToHex(borderColorR, borderColorG, borderColorB)
 	}
 
